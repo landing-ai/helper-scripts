@@ -4,15 +4,15 @@ import cv2
 import numpy as np
 from pycocotools.coco import COCO
 
-def process_coco_for_segmentation(input_dir, output_dir, input_json='_annotations.coco.json', output_json='_annotations_modified.coco.json', defect_map_file='defect_map.json'):
+def process_coco_for_segmentation(input_dir, output_dir, input_json='annotations.json', output_json='annotations_modified.json', defect_map_file='defect_map.json'):
     """
     Process COCO annotations, modify category IDs, generate a defect map, and create segmentation masks for each image.
 
     Args:
         input_dir (str): Path to the input directory containing the COCO JSON file and images.
         output_dir (str): Path to the output directory where modified annotations and masks are saved.
-        input_json (str): Name of the input COCO annotations JSON file. Default is '_annotations.coco.json'.
-        output_json (str): Name of the output modified COCO annotations JSON file. Default is '_annotations_modified.coco.json'.
+        input_json (str): Name of the input COCO annotations JSON file. Default is 'annotations.json'.
+        output_json (str): Name of the output modified COCO annotations JSON file. Default is 'annotations_modified.json'.
         defect_map_file (str): Name of the defect map JSON file to be saved. Default is 'defect_map.json'.
     
     Returns:
@@ -27,20 +27,26 @@ def process_coco_for_segmentation(input_dir, output_dir, input_json='_annotation
     with open(os.path.join(input_dir, input_json), 'r') as f:
         coco_data = json.load(f)
 
-    # Increment value to adjust category IDs
-    increment = 1
+     # Initialize the new category ID counter
+    new_category_id = 1
 
-    # Update category IDs in the 'annotations' section
-    for ann in coco_data['annotations']:
-        ann['category_id'] += increment
+    # Create a mapping of old category IDs to new category IDs
+    category_id_mapping = {}
 
     # Initialize defect mapping dictionary
     defect_map = {0: "ok"}
 
     # Update category IDs in the 'categories' section and map them to defect names
-    for ann in coco_data['categories']:
-        ann['id'] += increment
-        defect_map[ann['id']] = ann['name']
+    for category in coco_data['categories']:
+        old_id = category['id']
+        category['id'] = new_category_id  # Reset to a sequential new ID
+        category_id_mapping[old_id] = new_category_id  # Map old to new ID
+        defect_map[new_category_id] = category['name']  # Map new ID to defect name
+        new_category_id += 1  # Increment the new category ID for the next category
+
+    # Update category IDs in the 'annotations' section based on the mapping
+    for ann in coco_data['annotations']:
+        ann['category_id'] = category_id_mapping[ann['category_id']]
 
     # Save the modified annotations to the specified output JSON file
     with open(os.path.join(input_dir, output_json), 'w') as f:
@@ -73,7 +79,7 @@ def process_coco_for_segmentation(input_dir, output_dir, input_json='_annotation
 
         # Loop through each annotation (object) in the image
         for ann in anns:
-            label = coco.loadCats(ann['category_id'])[0]['name']  # Get the category name of the object
+            category_id = ann['category_id']  # Get the category_id of the object
             segmentation = ann['segmentation']  # Get segmentation data
 
             # Convert the segmentation to a binary mask
