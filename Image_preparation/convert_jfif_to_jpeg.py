@@ -3,12 +3,14 @@ import os
 
 def convert_jfif_to_jpeg(path: str) -> None:
     """
-    Converts all .jfif files in the specified directory and its subdirectories 
-    to .jpeg format, removing any alpha channel (transparency) if present.
-
-    This function walks through the provided directory, finds any files with a .jfif 
+    Convert all .jfif files in adirectory and its subdirectories to .jpeg format,
+    removing any alpha channel (transparency) if present. This function
+    walks through the provided directory, finds any files with a .jfif 
     extension, converts them to .jpeg, removes the original .jfif file, and removes any 
     transparency if the image contains an alpha channel.
+
+    LandingLens does not support working with .jfif files directly. Conversion to
+    supported image format is required. See https://support.landing.ai/docs/upload-images
 
     Args:
         path (str): The directory path to search for .jfif files.

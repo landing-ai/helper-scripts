@@ -3,20 +3,17 @@ import os
 
 def extract_images_from_videos(input_directory, output_directory, frame_rate = 1):
     """
-    Extract frames from video files in a directory at a specified frame rate and save them as images.
-    The saved images will include the video filename (without extension) in their name.
+    Extract frames from video files in a directory at a specified frame rate and save them as JPG images.
+    Each frame is named as "video_filename_frame_{frame_number}.jpg", where `video_filename` is the name of the video 
+    without the file extension and saved in a corresponding subdirectory within the output directory.
+
+    LandingLens requires image files (not video) for model training and inference. See
+    https://support.landing.ai/docs/upload-images
 
     Args:
         input_directory (str): Path to the directory containing video files (e.g., .mp4 or .avi).
         output_directory (str): Path to the directory where extracted frames will be saved.
         frame_rate (int): The number of frames to extract per second from the video (e.g., 1 frame per second).
-
-    Description:
-        This function processes all video files in the specified input directory. For each video, 
-        it extracts frames based on the specified frame rate and saves them as image files (JPEG) 
-        in a corresponding subdirectory within the output directory. Each frame is named as 
-        "video_filename_frame_{frame_number}.jpg", where `video_filename` is the name of the video 
-        without the file extension.
 
     Returns:
         None: The function saves the extracted frames as images in the specified output directory.

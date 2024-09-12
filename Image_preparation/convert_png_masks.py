@@ -4,14 +4,15 @@ import cv2
 
 def convert_png_masks(mask_path: str, new_path: str, new_value: int) -> None:
     """
-    The function converts all masks in a folder (path) converts it to 
-    Landing AI-compatible format (8-bit grayscale). More information available at
-    https://support.landing.ai/landinglens/docs/upload-labeled-images-seg#segmentation-mask
+    Converts all masks in a directory to 8-bit grayscale.
     
     This function iterates through all PNG files in the specified mask directory, processes 
     each mask by replacing non-zero pixel values with the provided `new_value`, and stores 
     the modified masks in the specified output directory. It handles both grayscale and 
     color (RGB/RGBA) masks, ensuring proper processing depending on the mask type.
+
+    LandingLens requires that masks be 8-bit grayscale. See 
+    https://support.landing.ai/landinglens/docs/upload-labeled-images-seg#segmentation-mask
 
     Args:
         mask_path (str): The directory containing the original PNG masks.

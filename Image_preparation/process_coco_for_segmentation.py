@@ -6,7 +6,17 @@ from pycocotools.coco import COCO
 
 def process_coco_for_segmentation(input_dir, output_dir, input_json='annotations.json', output_json='annotations_modified.json', defect_map_file='defect_map.json'):
     """
-    Process COCO annotations, modify category IDs, generate a defect map, and create segmentation masks for each image.
+    Process COCO-style annotations to modify category IDs, generate a defect map, and create segmentation masks for each image. 
+    This function accomplishes several key tasks:
+    1. Loads the COCO-style annotations from a JSON file.
+    2. Maps existing category IDs to a new set of sequential category IDs.
+    3. Generates a defect map that relates the new category IDs to defect names.
+    4. Updates the annotations with the new category IDs and saves the modified annotations to a new JSON file.
+    5. Creates segmentation masks for each image in the dataset based on the annotations and saves them as separate PNG files.
+        
+    LandingLens segmentation projects require that annotations are provided as segmentation mask images. 
+    This function prepares image annotations for LandingLens segmentation projects.
+    See https://support.landing.ai/docs/upload-labeled-images-seg
 
     Args:
         input_dir (str): Path to the input directory containing the COCO JSON file and images.

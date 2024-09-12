@@ -3,13 +3,14 @@ from PIL import Image
 
 def transparent_to_solid(path="./MyProject/Images", fill_color=(255, 255, 255)):
     """
-    Walk through a directory, convert any images with transparency to RGB mode, 
-    and save them with a specified background color.
+    Convert all images in a directpry with transparency to RGB mode, and save them with a specified background color.
+
+    LandingLens expects all image pixels to be a color (not transparent). 
 
     Args:
         path (str): Path to the directory containing images. Default is './MyProject/Images'.
         fill_color (tuple): The background color to use for replacing transparency, in RGB format. 
-                            Default is white (255, 255, 255).
+            The default is white (255, 255, 255).
 
     Description:
         This function iterates through all files in a specified directory and its subdirectories.

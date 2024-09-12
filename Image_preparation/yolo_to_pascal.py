@@ -2,10 +2,13 @@
 Module Name: YOLO-to-VOC Annotation Converter
 
 Description:
-    This script converts YOLO format annotation files (.txt) to Pascal VOC format annotation 
-    files (.xml). It processes a set of images and their corresponding YOLO-style annotations, 
+    Convert YOLO format annotation files (.txt) to Pascal VOC format annotation files (.xml). 
+    The script processes a set of images and their corresponding YOLO-style annotations, 
     converts bounding box coordinates from normalized format (xywhn) to absolute coordinates 
     (xyxy), and saves the results as XML files compatible with the Pascal VOC dataset format.
+
+    Use of LandingLens for object detection requires the Pascal VOC format for annotations. 
+    See https://support.landing.ai/docs/upload-labeled-images-od. 
 
 Usage:
     The script can be executed with or without command-line arguments. It accepts the following arguments:
@@ -29,22 +32,6 @@ Outputs:
     The script will generate XML files corresponding to each image with YOLO annotations, 
     saved in the specified save directory. It also prints the total number of images processed, 
     the number of unique categories, and the total number of bounding boxes.
-
-Dependencies:
-    - Python 3.x
-    - OpenCV (cv2)
-    - lxml
-    - tqdm
-
-    Install the required packages via pip:
-        $ pip install opencv-python lxml tqdm
-
-Author:
-    Landing AI
-
-Date:
-    2024-09-09
-
 """
 
 

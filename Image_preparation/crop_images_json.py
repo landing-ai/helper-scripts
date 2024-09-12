@@ -4,13 +4,17 @@ from PIL import Image
 
 def crop_images_json(json_directory: str) -> None:
     """
-    Processes images based on cropping information from JSON files and saves 
+    Process images based on cropping information in JSON files and save 
     cropped images in label-specific directories.
 
     This function iterates over JSON files in the specified directory, reads cropping 
     coordinates from each JSON file, and uses them to crop the associated image. The 
     cropped images are saved into folders named after the labels specified in the JSON 
     files, organized within a 'cropped_images' folder.
+
+    This function can take the output of an object detection model in LandingLens, 
+    and crop the image to the area containing the object of interest. The resulting 
+    cropped images are often passed to another model to insepct the cropped area further.
 
     Args:
         json_directory (str): The directory containing JSON files and corresponding images. 

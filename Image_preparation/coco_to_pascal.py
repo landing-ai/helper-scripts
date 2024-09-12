@@ -3,10 +3,13 @@
 Module Name: COCO to Pascal VOC Converter
 
 Description:
-    This module provides functionality to convert COCO-style annotation files (in JSON format) into Pascal VOC format (in XML). 
+    This module provides functionality to convert COCO-style annotation files (in JSON format) into Pascal VOC format (in XML).
     It can handle individual JSON files or directories containing multiple JSON files. The annotations for object detection, 
     such as bounding boxes and category names, are extracted from the COCO format and saved in the widely-used Pascal VOC format, 
     making it easier to integrate COCO data into pipelines that require VOC-style annotations.
+
+    Use of LandingLens for object detection requires the Pascal VOC format for annotations. 
+    See https://support.landing.ai/docs/upload-labeled-images-od. 
 
 Main Functions:
     - catid2name: Converts category IDs to category names from a COCO dataset.
@@ -34,12 +37,6 @@ Dependencies:
     - pycocotools: For handling COCO format data.
     - lxml: For generating XML files.
     - tqdm: For displaying progress bars during the conversion process.
-
-Author:
-    Landing AI
-
-Date:
-    2024-09-09
 """
 
 from pycocotools.coco import COCO
