@@ -15,3 +15,4 @@ Scripts and functions to assist with common Visual AI tasks
 |[find_def_location_grid.py](https://github.com/landing-ai/helper-scripts/blob/main/Image_preparation/find_def_location_grid.py)|Determine the grid cell location of a bounding box within an image.|
 |[convert_png_masks.py](https://github.com/landing-ai/helper-scripts/blob/main/Image_preparation/convert_png_masks.py)|Convert all masks in in a directory to the LandingAI-compatible format for masks (8-bit grayscale).|
 |[crop_images_json.py](https://github.com/landing-ai/helper-scripts/blob/main/Image_preparation/crop_images_json.py)|Crop images based on cropping information in JSON files and save cropped images in label-specific directories.|
+|[resize_images_and_labels.py](https://github.com/landing-ai/helper-scripts/blob/main/Image_preparation/resize_images_and_labels.py)|Resize and save corresponding image and label (mask) files with matching filenames.|
