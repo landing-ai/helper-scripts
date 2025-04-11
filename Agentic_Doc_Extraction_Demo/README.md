@@ -32,7 +32,7 @@ This demo showcases an **agentic document processing pipeline** that extracts st
 │           ├──26939ba0-220a-4cbb-8bff-be13265c6364_0.png
 │           ├──aa2878ff-30e9-414b-932a-96d1d6cc8f86_0.png
 │           └──e4ad3629-4341-4f08-8a20-1cc05ef1519f_0.png
-├── visualizations/                  # Saved pages with Visual Groundings overlayed
+├── visualizations/                   # Saved pages with Visual Groundings overlayed
 │   ├── KYC_EXAMPLE_DOC_viz_page_0.png
 │   └── KYC_EXAMPLE_DOC_viz_page_1.png
 ```
@@ -134,4 +134,4 @@ This demo uses **fake data** and is intended for educational and testing purpose
 
 ## 📬 Contact
 
-For internal demo purposes only. Reach out to `yoursupport@yourdomain.com` for questions.
+For internal demo purposes only. Reach out to LandingAI for questions.
