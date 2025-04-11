@@ -44,8 +44,8 @@ This demo showcases an **agentic document processing pipeline** that extracts st
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/landing-ai/helper-scripts.git
+cd Agentic_Doc_Extraction_Demo
 ```
 
 ### 2. Set up your environment
@@ -57,6 +57,18 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file or update `config.py` with your credentials:
+```python
+# Example config.py file
+API_KEYS = {
+    # Add your Agentic Document Extraction API Key
+    "ade": "your_ade_api_key_here", 
+    # Add your VisionAgent API Key
+    "va": "your_va_api_key_here",
+    # Add your OpenAI Key
+    "openai": "your_openai_key_here"
+}
+```
+OR
 
 ```python
 # config.py
