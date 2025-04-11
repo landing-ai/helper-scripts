@@ -3,7 +3,7 @@
 
 This demo showcases an **agentic document processing pipeline** that extracts structured fields and supports question-answering (Q&A) from institutional KYC documents using the following components:
 
-- [LandingAI](https://landing.ai): Document extraction (Python SDK + REST API)
+- [LandingAI](https://landing.ai): Document extraction (Python SDK `agentic-doc>=0.0.15` + REST API)
 - [OpenAI GPT-4](https://platform.openai.com): Field extraction, Q&A, and evaluation
 - [LangChain](https://www.langchain.com/): Evaluation framework
 - 🖼️ Visual Grounding with overlaid bounding boxes
