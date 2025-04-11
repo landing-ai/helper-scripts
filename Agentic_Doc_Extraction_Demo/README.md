@@ -109,4 +109,4 @@ This demo uses **fake data** and is intended for educational and testing purpose
 
 ## 📬 Contact
 
-For internal demo purposes only. Reach out to `yoursupport@yourdomain.com` for questions.
+For internal demo purposes only. Reach out to LandingAI for questions.
