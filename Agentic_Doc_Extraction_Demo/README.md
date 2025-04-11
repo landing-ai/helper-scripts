@@ -1,5 +1,5 @@
 
-# 🧾 Document Extraction Demo with LandingAI and OpenAI
+# 🧾 Document Extraction Demo with LandingAI
 
 This demo showcases an **agentic document processing pipeline** that extracts structured fields and supports question-answering (Q&A) from institutional KYC documents using the following components:
 
