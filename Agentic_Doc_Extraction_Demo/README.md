@@ -19,8 +19,20 @@ This demo showcases an **agentic document processing pipeline** that extracts st
 ├── config.py                         # API keys and environment variables
 ├── KYC_EXAMPLE_DOC.pdf               # Sample institutional KYC document
 ├── LandingAI_Logo.svg                # Company logo for branding
-├── groundings/                       # Stores the visual grounding information per document per page
-├── visualizations/
+├── groundings/                       # Saved Visual Groundings from each page
+│   └── KYC_EXAMPLE_DOC_20250411_121653
+│       ├── page_0
+│           ├──0c0c8571-d356-41ab-841b-84f0e04a4651_0.png
+│           ├──75d1f906-7b73-4fb4-985d-52fddb7b5e71_0.png
+│           └──0519b915-80a4-4a1f-bbc6-e2fc59af348c_0.png
+│       └── page_1
+│           ├──6a6d1924-d57c-4a25-860c-1249562be730_0.png
+│           ├──0353f668-a4f5-4b0e-8413-fc6d913c7ba0_0.png
+│           ├──979c6048-7c7a-45da-99a7-b208a9b1c714_0.png
+│           ├──26939ba0-220a-4cbb-8bff-be13265c6364_0.png
+│           ├──aa2878ff-30e9-414b-932a-96d1d6cc8f86_0.png
+│           └──e4ad3629-4341-4f08-8a20-1cc05ef1519f_0.png
+├── visualizations/                   # Saved pages with Visual Groundings overlayed
 │   ├── KYC_EXAMPLE_DOC_viz_page_0.png
 │   └── KYC_EXAMPLE_DOC_viz_page_1.png
 ```
@@ -32,8 +44,8 @@ This demo showcases an **agentic document processing pipeline** that extracts st
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/landing-ai/helper-scripts.git
+cd Agentic_Doc_Extraction_Demo
 ```
 
 ### 2. Set up your environment
@@ -45,6 +57,18 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file or update `config.py` with your credentials:
+```python
+# Example config.py file
+API_KEYS = {
+    # Add your Agentic Document Extraction API Key
+    "ade": "your_ade_api_key_here", 
+    # Add your VisionAgent API Key
+    "va": "your_va_api_key_here",
+    # Add your OpenAI Key
+    "openai": "your_openai_key_here"
+}
+```
+OR
 
 ```python
 # config.py
