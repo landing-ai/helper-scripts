@@ -1,5 +1,5 @@
 ## Overview
-This "label assistant" script is designed for segmentation projects in LandingLens. Similar to the "label assistant" feature for LandingLens Object Detection models, this script leverages an **already trained segmentation model** (deployed as a cloud endpoint) to automatically generate segmentation masks for unlabeled images. By doing so, it accelerates your segmentation labeling process, allowing you to quickly expand your dataset without manual mask creation.
+This "label assistant" script is designed for [segmentation projects in LandingLens](https://support.landing.ai/docs/segmentation). Similar to the "label assistant" feature for LandingLens Object Detection models, this script leverages an **already trained segmentation model** (deployed as a cloud endpoint) to automatically generate segmentation masks for unlabeled images. By doing so, it accelerates your segmentation labeling process, allowing you to quickly expand your dataset without manual mask creation.
 
 ## Purpose
 Automatically generate segmentation masks for unlabeled images using a trained model in LandingLens.
@@ -28,6 +28,7 @@ Automatically generate segmentation masks for unlabeled images using a trained m
 
 ## File Structure
 
+```
 project_root/
 │
 ├── images/                      # Source folder containing unlabeled images.
@@ -42,7 +43,7 @@ project_root/
 │
 ├── segmentation_label_assistance.py       # Main Python script.
 └── README.md                    # This README file.
-
+```
 
 ## Q&A
 - **Q:** What is the difference between this tool and the "Smart Labeling" tool in LandingLens?  
