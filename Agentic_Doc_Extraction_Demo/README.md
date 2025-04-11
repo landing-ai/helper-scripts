@@ -19,6 +19,7 @@ This demo showcases an **agentic document processing pipeline** that extracts st
 ├── config.py                         # API keys and environment variables
 ├── KYC_EXAMPLE_DOC.pdf               # Sample institutional KYC document
 ├── LandingAI_Logo.svg                # Company logo for branding
+├── groundings/                       # Stores the visual grounding information per document per page
 ├── visualizations/
 │   ├── KYC_EXAMPLE_DOC_viz_page_0.png
 │   └── KYC_EXAMPLE_DOC_viz_page_1.png
