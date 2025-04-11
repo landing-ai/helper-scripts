@@ -1,0 +1,188 @@
+
+import os
+import re
+import json
+import time
+import logging
+import subprocess
+from datetime import datetime
+from PIL import Image
+import snowflake.connector
+from landingai.predict import SnowflakeNativeAppPredictor
+
+# ==============================
+# 🔧 Setup Logging
+# ==============================
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# ==============================
+# 🔐 Snowflake Configuration
+# ==============================
+snowflake_account_locator = "INSERT_YOUR_OWN"
+snowflake_user = "INSERT_YOUR_OWN"
+snowflake_account_identifier = "INSERT_YOUR_OWN"
+url = "INSERT_YOUR_OWN"
+private_key_file = 'INSERT_YOUR_OWN'
+
+
+if not os.path.exists(private_key_file):
+    raise FileNotFoundError(f"Private key file not found: {private_key_file}")
+
+with open(private_key_file, "r") as file:
+    private_key = file.read()
+
+warehouse = 'INSERT_YOUR_OWN'
+database = 'INSERT_YOUR_OWN'
+schema = 'INSERT_YOUR_OWN'
+
+conn_params = {
+    'account': snowflake_account_identifier,
+    'user': snowflake_user,
+    'authenticator': 'SNOWFLAKE_JWT',
+    'private_key_file': private_key_file,
+    'warehouse': warehouse,
+    'database': database,
+    'schema': schema
+}
+
+conn = snowflake.connector.connect(**conn_params)
+cursor = conn.cursor()
+
+# ==============================
+# 🔮 LandingLens Inference Setup
+# ==============================
+endpoint_id = "INSERT_YOUR_OWN"
+
+predictor = SnowflakeNativeAppPredictor(
+    endpoint_id=endpoint_id,
+    native_app_url=url,
+    snowflake_account=snowflake_account_locator,
+    snowflake_user=snowflake_user,
+    snowflake_private_key=private_key,
+)
+
+# ==============================
+# 📡 Stream & Directory Setup
+# ==============================
+youtube_url = "INSERT_YOUR_OWN"
+width = 640
+sleep_seconds = 30  # Update with your own values
+iterations = 10 # Update with your own values
+save_dir = os.path.join(os.getcwd(), 'Inference_Images')
+os.makedirs(save_dir, exist_ok=True)
+
+stage_name = "@INSERT_YOUR_OWN"
+table_name = "INSERT_YOUR_OWN"
+filename_pattern = r"image_(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})"
+
+# ==============================
+# 🛰️ Utility Functions
+# ==============================
+def get_live_stream_url(youtube_url):
+    try:
+        command = ['/opt/homebrew/bin/streamlink', youtube_url, 'best', '--stream-url']
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=10)
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr.decode())
+        return result.stdout.decode('utf-8').strip()
+    except Exception as e:
+        logging.error(f"Error fetching live stream URL: {e}")
+        return None
+
+def capture_and_save_image(stream_url, save_dir, width):
+    height = int(width * 9 / 16)
+    timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+    filename = f"image_{timestamp}.png"
+    filepath = os.path.join(save_dir, filename)
+    command = [
+        '/opt/homebrew/bin/ffmpeg', '-i', stream_url, '-vframes', '1', '-q:v', '2',
+        '-vf', f'scale={width}:{height}', filepath
+    ]
+    try:
+        subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=10)
+        logging.info(f"Saved image: {filename}")
+        return filepath, filename
+    except Exception as e:
+        logging.error(f"Failed to capture image: {e}")
+        return None, None
+
+# ==============================
+# 🔁 Main Inference Loop
+# ==============================
+stream_url = get_live_stream_url(youtube_url)
+if not stream_url:
+    raise RuntimeError("Unable to retrieve stream URL.")
+
+start_time = datetime.now()
+logging.info(f"Starting inference loop at {start_time.strftime('%H:%M:%S')}")
+
+for i in range(iterations):
+    logging.info(f"\n--- Iteration {i+1}/{iterations} ---")
+
+    filepath, filename = capture_and_save_image(stream_url, save_dir, width)
+    if not filepath:
+        continue
+
+    try:
+        image = Image.open(filepath)
+    except Exception as e:
+        logging.error(f"Error opening image: {e}")
+        continue
+
+    match = re.match(filename_pattern, filename)
+    if not match:
+        logging.error(f"Filename pattern did not match: {filename}")
+        continue
+
+    DT_year, DT_month, DT_day, DT_hour, DT_minute, DT_second = map(int, match.groups())
+
+    try:
+        predictions = predictor.predict(image)
+    except Exception as e:
+        logging.error(f"Model inference failed: {e}")
+        continue
+
+    if not predictions:
+        logging.warning("No objects detected.")
+        continue
+
+    try:
+        upload_command = f"PUT 'file://{filepath}' {stage_name} AUTO_COMPRESS=FALSE"
+        cursor.execute(upload_command)
+        logging.info(f"Uploaded {filename} to stage {stage_name}")
+    except Exception as e:
+        logging.error(f"Upload failed: {e}")
+        continue
+
+    try:
+        for obj in predictions:
+            bboxes_json = json.dumps(obj.bboxes)
+            insert_query = f"""
+                INSERT INTO {table_name} (
+                    filename, endpoint_id, DT_year, DT_month, DT_day, DT_hour, DT_minute, DT_second,
+                    label_name, label_index, confidence, bboxes, id
+                )
+                SELECT
+                    '{filename}', '{endpoint_id}', {DT_year}, {DT_month}, {DT_day}, {DT_hour}, {DT_minute}, {DT_second},
+                    '{obj.label_name}', {obj.label_index}, {obj.score}, PARSE_JSON('{bboxes_json}'), '{obj.id}'
+            """
+            cursor.execute(insert_query)
+            logging.info(f"Inserted {obj.label_name} ({obj.score:.2f})")
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        logging.error(f"Database insert failed: {e}")
+
+    time.sleep(sleep_seconds)
+
+# ==============================
+# ✅ Cleanup
+# ==============================
+cursor.close()
+conn.close()
+end_time = datetime.now()
+logging.info(f"Inference loop ended at {end_time.strftime('%H:%M:%S')}")
