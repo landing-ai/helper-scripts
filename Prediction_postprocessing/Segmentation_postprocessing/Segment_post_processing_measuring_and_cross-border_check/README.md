@@ -3,8 +3,14 @@
 ## Overview
 This script post-processes segmentation outputs from an image analysis task. It takes a JSON file containing segmentation predictions (encoded using Run-Length Encoding, or RLE) and its corresponding image, decodes the RLE masks, processes the edge lines to differentiate top and bottom segments, extracts defect areas labeled as "CHIPPING," measures the vertical distances from each defect to the detected edges, calculates the areas of different segmentation labels, and visualizes the processed results by overlaying the segmentation on the original image.
 
+## Ouputs
+1. For every defect instance, determines the vertical distance to its nearest edge (top or bottom).
+2. Calculates areas for each segmentation label (by summing non-zero pixels in the masks).
+3. Generates and saves an annotated image with a) Red points indicating the processed edges and b) Various shades of green illustrating defect areas.
+4. Prints the computed distances and areas to the console.
+
 ## Example
-![Diagram](input/Test_sample_image.png)
+![Diagram](images/Test_sample_image.png)
 
 
 ## Features
