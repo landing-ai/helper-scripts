@@ -36,7 +36,7 @@ This Streamlit application enables users to download YouTube videos, extract fra
   ```bash
   pip install streamlit opencv-python pillow requests altair pandas yt-dlp
  
- ## ⚙️ Configuration
+## ⚙️ Configuration
 
 - **LandingAI API Key**  
   Provide your Base64-encoded LandingAI key in the `LandingLens API Key` field on **Tab 1** of the app.
