@@ -33,8 +33,8 @@ This Streamlit application enables users to download YouTube videos, extract fra
    venv\Scripts\activate     # Windows
 
 3. **Install dependencies**
-  ```bash
-  pip install streamlit opencv-python pillow requests altair pandas yt-dlp
+    ```bash
+    pip install streamlit opencv-python pillow requests altair pandas yt-dlp
  
 ## ⚙️ Configuration
 
