@@ -7,6 +7,7 @@ The Python script in this folder is designed to capture images from a live YouTu
 There is a video on the LandingAI YouTube channel showing exactly how to use this script and demonstrating the full pipeline from camera feed to dashboard. 
 https://www.youtube.com/watch?v=JyI9r3U2HSg
 
+There is a Medium blog post that explains how this scripts fits into a larger solution. It is named [From CCTV to Insights — How Snowflake Customers Can Build Visual AI](https://medium.com/snowflake/from-cctv-to-insights-how-snowflake-customers-can-build-visual-ai-6d2d2813f070)
 
 ## Features
 - **Live Stream Capture:** Retrieves the best stream URL from a YouTube video using `streamlink` and captures snapshots using `ffmpeg`.
