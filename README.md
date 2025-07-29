@@ -1,6 +1,10 @@
 # helper-scripts
 Scripts and functions to assist with common Visual AI tasks
 
+Disclaimer: 
+All sample helper scripts are provided “as is” for Agentic Document Extraction (ADE) and LandingLens users.
+No warranty is expressed or implied, and no support is provided.
+
 
 ## Image Preparation
 
