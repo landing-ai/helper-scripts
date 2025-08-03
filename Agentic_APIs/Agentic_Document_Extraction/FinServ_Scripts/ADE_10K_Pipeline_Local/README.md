@@ -84,7 +84,7 @@ ADE-10K-RAG/
 ## Example Query
 
 ```python
-rag_query("What was Apple’s net income in 2023?", top_k=3, threshold=0.25)
+rag_query("What was Apple’s net sales in 2023?", top_k=5, threshold=0.32)
 ```
 
 Output:
