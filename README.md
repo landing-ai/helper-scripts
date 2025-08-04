@@ -1,5 +1,5 @@
-# helper-scripts
-Scripts and functions to assist with common Visual AI tasks
+# landinglens-helper-scripts
+Scripts and functions to assist with common Visual AI tasks using LandingLens and LandingEdge.
 
 Disclaimer: 
 All sample helper scripts are provided “as is” for Agentic Document Extraction (ADE) and LandingLens users.
