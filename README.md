@@ -2,7 +2,7 @@
 Scripts and functions to assist with common Visual AI tasks using LandingLens and LandingEdge.
 
 Disclaimer: 
-All sample helper scripts are provided “as is” for Agentic Document Extraction (ADE) and LandingLens users.
+All sample helper scripts are provided “as is” for LandingLens and LandingEdge users.
 No warranty is expressed or implied, and no support is provided.
 
 
