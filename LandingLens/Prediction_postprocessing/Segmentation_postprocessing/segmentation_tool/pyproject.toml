@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "segmentation_tool"
+version = "1.0.0"
+authors = [
+    {name = "Segmentation Tool Team", email = "support@segmentation-tool.com"},
+]
+description = "A comprehensive tool for image segmentation analysis using LandingAI"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+keywords = ["segmentation", "computer vision", "landingai", "image analysis", "defect detection"]
+dependencies = [
+    "landingai>=0.3.0",
+    "click>=8.0.0",
+    "pillow>=9.0.0",
+    "numpy>=1.21.0",
+    "matplotlib>=3.5.0",
+    "tabulate>=0.9.0",
+    "python-dotenv>=1.0.0",
+    "opencv-python>=4.6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/your-org/segmentation_tool"
+"Bug Reports" = "https://github.com/your-org/segmentation_tool/issues"
+"Source" = "https://github.com/your-org/segmentation_tool"
+Documentation = "https://github.com/your-org/segmentation_tool/wiki"
+
+[project.scripts]
+segmentation-tool = "segmentation_tool.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["segmentation_tool*"]
+
+[tool.setuptools.package-data]
+segmentation_tool = ["*.py"]
